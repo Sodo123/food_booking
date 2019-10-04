@@ -14,6 +14,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+
 $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
 $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 ?>
@@ -31,7 +32,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->script(array('https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js','global'));
 		echo $this->Html->css('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
 		echo $this->fetch('meta');
-		//echo $this->fetch('css');
+		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
 </head>
@@ -48,6 +49,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 		</div>
 	</div>
-	<?php echo $this->element('sql_dump'); ?>
+	 <?php echo $this->element('sql_dump'); ?>
 </body>
 </html>

@@ -65,11 +65,11 @@
                     <tr>
                         <td><?php echo $order['Order']['id']; ?></td>
                         <td><?php echo $order['Order']['customer_name'] ?></td>
-                        <td><?php echo $order['Food'][0]['name'] ?></td>
-                        <td><?php echo $order['Food'][1]['name'] ?></td>
-                        <td><?php echo $order['Food'][2]['name'] ?></td>
-                        <td><?php echo $order['Food'][3]['name'] ?></td>
-                        <td><?php if( count($order['Food']) >= 4) echo $order['Food'][4]['name'] ?></td>
+                        <td><?php if( count($order['Food']) > 0) echo $order['Food'][0]['name'] ?></td>
+                        <td><?php if( count($order['Food']) > 1) echo $order['Food'][1]['name'] ?></td>
+                        <td><?php if( count($order['Food']) > 2) echo $order['Food'][2]['name'] ?></td>
+                        <td><?php if( count($order['Food']) > 3) echo $order['Food'][3]['name'] ?></td>
+                        <td><?php if( count($order['Food']) > 4) echo $order['Food'][4]['name'] ?></td>
                         <td class="text-danger"><?php echo $order['Order']['status'] ?></td>
                     </tr>
                 <?php endforeach; ?>
@@ -79,7 +79,7 @@
 
         <?php echo $this->Form->create('Order', array('action' => 'add')); ?>
         <div>
-            <h3>Your order</h3>
+            <h3>Create order</h3>
             <div class="row">
                 <div class="col-sm-6">
                     <table class="table table-striped table-bordered" id="mealsTable">
@@ -105,7 +105,6 @@
             echo $this->Form->end('Submit'); 
          ?>
         
-
     </div>
 </div>
 
