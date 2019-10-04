@@ -65,11 +65,11 @@
                     <tr>
                         <td><?php echo $order['Order']['id']; ?></td>
                         <td><?php echo $order['Order']['customer_name'] ?></td>
-                        <td> Cá sốt</td>
-                        <td> Đậu sốt</td>
-                        <td> Khoai tây xào</td>
-                        <td> Lạc rang </td>
-                        <td></td>
+                        <td><?php echo $order['Food'][0]['name'] ?></td>
+                        <td><?php echo $order['Food'][1]['name'] ?></td>
+                        <td><?php echo $order['Food'][2]['name'] ?></td>
+                        <td><?php echo $order['Food'][3]['name'] ?></td>
+                        <td><?php if( count($order['Food']) >= 4) echo $order['Food'][4]['name'] ?></td>
                         <td class="text-danger"><?php echo $order['Order']['status'] ?></td>
                     </tr>
                 <?php endforeach; ?>
@@ -114,7 +114,7 @@
         $(".addDrink").click(function() {
             var $data = "<tr> <td>".concat($(this).attr('name'))
             .concat("</td> <td><a class='deleteFood'>Xóa</a></td> </tr>")
-            .concat("<input type='hidden' name='food[]' value='")
+            .concat("<input type='hidden' name='foods[]' value='")
             .concat($(this).attr('id'))
             .concat("'/>");
             console.log($data);
@@ -124,19 +124,12 @@
         $(".addMeal").click(function() {
             var $data = "<tr> <td>".concat($(this).attr('name'))
             .concat("</td> <td><a class='deleteFood'>Xóa</a></td> </tr>")            
-            .concat("<input type='hidden' name='food[]' value='")
+            .concat("<input type='hidden' name='foods[]' value='")
             .concat($(this).attr('id'))
             .concat("'/>");
             console.log($data);
             $('#mealsTable').append($data);
         });
-
-        // $(".deleteFood").click(function() {
-        //     console.log("hello");
-        //     var $tr = $(this).parent().parent();
-        //     console.log($tr);
-        //     $tr.remove();
-        // });
 
         $(".table").on('click', '.deleteFood', function(){
             var $tr = $(this).parent().parent();

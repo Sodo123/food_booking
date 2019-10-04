@@ -10,4 +10,12 @@ class Order extends AppModel {
             )
         )
     );
+
+    public $hasAndBelongsToMany = array(
+        'Food' =>
+            array(
+                'className' => 'Food',
+                'joinTable' => 'foods_orders',
+            )
+        );
 }
