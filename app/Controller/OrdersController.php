@@ -6,9 +6,12 @@ class OrdersController extends AppController {
     public $components = array('Flash');
     var $uses = array('Order', 'Food', 'FoodOrder');
 
+    public function isAuthorized($user) {// cập nhật lại
+        return true;
+    }
+
     public function beforeFilter()
     {
-
         if($this->Auth->user('role')=='admin'){
             $this->set("role",'admin');//it will set a variable role for your view 
         }
@@ -90,6 +93,62 @@ class OrdersController extends AppController {
             $this->Flash->error(__('Order was not deleted'));
             return $this->redirect(array('action' => 'index'));
         }
-	}
+    }
+    
+    public function debt(){
+
+        $conditions = array('status' => 'approved');
+        if($this->Auth->user('role') != 'admin'){// không phải admin thì chỉ xem order của mình
+            $user_id = $this->Auth->user('id');
+            $conditions['Order.user_id'] = $user_id;
+        }
+        $filter = array(
+            'order' => array('Order.created' => 'asc'),
+            'conditions' => $conditions
+        );
+        $orders = $this->Order->find('all',$filter);
+        $new_orders = array();
+        $i = 0;
+        foreach($orders as $order) {
+            $drinksStr = [];
+            foreach($order['Food'] as $food)
+            {
+                if( $food['category_id'] == 2) {
+                    $drinksStr[] = $food['name'] . ' (' . $food['FoodsOrder']['quantity'] . ')';
+                }
+            }
+            $order['Order']['drinks'] = join(", ",$drinksStr);
+            $new_orders[$i] = $order;
+            $i++;
+        }
+        $this->set(array('orders' => $new_orders));
+    }
+
+    public function view(){
+        $filter = array(
+            'order' => array('Order.created' => 'desc')
+        );
+        if($this->Auth->user('role') != 'admin'){// không phải admin thì chỉ xem order của mình
+            $user_id = $this->Auth->user('id');
+            $filter['conditions'] = array(array('Order.user_id' => $user_id));
+        }
+
+        $orders = $this->Order->find('all',$filter);
+        $new_orders = array();
+        $i = 0;
+        foreach($orders as $order) {
+            $drinksStr = [];
+            foreach($order['Food'] as $food)
+            {
+                if( $food['category_id'] == 2) {
+                    $drinksStr[] = $food['name'] . ' (' . $food['FoodsOrder']['quantity'] . ')';
+                }
+            }
+            $order['Order']['drinks'] = join(", ",$drinksStr);
+            $new_orders[$i] = $order;
+            $i++;
+        }
+        $this->set(array('orders' => $new_orders));
+    }
 
 }

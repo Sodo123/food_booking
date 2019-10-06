@@ -77,7 +77,7 @@
                         <td><?php echo $order['Order']['drinks'] ?></td>
                         <td><?php echo $order['Order']['note'] ?></td>
                         <td class="text-danger"><?php echo $order['Order']['status'] ?></td>
-                        <?php if( $user_id == $order['Order']['user_id']) { 
+                        <?php if( $user_id == $order['Order']['user_id'] || $role == 'admin') { 
                             echo $this->Form->create('Order', array('action' => 'delete'));
                             echo '<td> <button type="submit">Xóa</button></td>'; ?>
                             <input type='hidden' name='id' value='<?php echo $order['Order']['id'] ?>'>
