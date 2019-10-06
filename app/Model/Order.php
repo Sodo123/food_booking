@@ -1,6 +1,7 @@
 <?php
 
 class Order extends AppModel {
+    public $drinks = "hello";
     public $validate = array(
         'status' => array(
             'valid' => array(
@@ -16,6 +17,8 @@ class Order extends AppModel {
             array(
                 'className' => 'Food',
                 'joinTable' => 'foods_orders',
-            )
+            ),
         );
+    public $belongsTo = 'User';
+
 }

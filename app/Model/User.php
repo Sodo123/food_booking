@@ -36,4 +36,8 @@ class User extends AppModel {
         }
         return true;
     }
+
+    public function isAdmin() {
+        return $this->role = "admin";
+    }
 }

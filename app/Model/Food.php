@@ -17,4 +17,5 @@ class Food extends AppModel {
                 'joinTable' => 'foods_orders'
             )
         );
+    public $belongsTo = 'Category';
 }

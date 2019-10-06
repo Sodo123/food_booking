@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-3">
         <h3>List Meals</h3>
         <table class="table table-striped table-bordered">
             <tr>
@@ -44,33 +44,48 @@
             <?php unset($food); ?>
         </table>
     </div>
-    <div class=" col-sm-8">
+    <div class=" col-sm-9">
         <div>
             <h3>Orders</h3>
             <table class="table table-striped table-bordered">
                 <tr>
-                    <th>Order</th>
+                    <th>Stt</th>
                     <th>User</th>
                     <th>Món 1</th>
                     <th>Món 2</th>
                     <th>Món 3</th>
                     <th>Món 4</th>
                     <th>Nước ép</th>
-                    <th>Trạng thái</th>
+                    <th>Note</th>
+                    <th>Status</th>
+                    <th>Action</th>
                 </tr>
 
                 <!-- Here is where we loop through our $posts array, printing out post info -->
 
-                <?php foreach ($orders as $order) : ?>
+                <?php $i=1; foreach ($orders as $order) : ?>
                     <tr>
-                        <td><?php echo $order['Order']['id']; ?></td>
+                        <td><?php echo $order['Order']['id']; $i++ ?></td>
                         <td><?php echo $order['Order']['customer_name'] ?></td>
-                        <td><?php if( count($order['Food']) > 0) echo $order['Food'][0]['name'] ?></td>
-                        <td><?php if( count($order['Food']) > 1) echo $order['Food'][1]['name'] ?></td>
-                        <td><?php if( count($order['Food']) > 2) echo $order['Food'][2]['name'] ?></td>
-                        <td><?php if( count($order['Food']) > 3) echo $order['Food'][3]['name'] ?></td>
-                        <td><?php if( count($order['Food']) > 4) echo $order['Food'][4]['name'] ?></td>
+                        <?php for($j=0; $j < 4; $j++) :  ?>
+                            <td><?php 
+                                if( count($order['Food']) > $j) 
+                                    if( $order['Food'][$j]['category_id'] == 1) 
+                                        echo $order['Food'][$j]['name'] ?>
+                            </td>
+                        <?php endfor; ?>
+                        <td><?php echo $order['Order']['drinks'] ?></td>
+                        <td><?php echo $order['Order']['note'] ?></td>
                         <td class="text-danger"><?php echo $order['Order']['status'] ?></td>
+                        <?php if( $user_id == $order['Order']['user_id']) { 
+                            echo $this->Form->create('Order', array('action' => 'delete'));
+                            echo '<td> <button type="submit">Xóa</button></td>'; ?>
+                            <input type='hidden' name='id' value='<?php echo $order['Order']['id'] ?>'>
+                        <?php
+                            echo $this->Form->end();
+                        } else echo '<td></td>';
+                        ?>
+                        
                     </tr>
                 <?php endforeach; ?>
                 <?php unset($order); ?>
@@ -99,8 +114,21 @@
                     </table>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="customer_name">Tên KH</label>
+                        <input type="text" class="form-control" placeholder="Nhập thêm order cho người khác" name="customer_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="note">Ghi chú</label>
+                        <input type="text" class="form-control" placeholder="Nhiều cơm, nhiều thức ăn ..."
+                        name="note">
+                    </div>
+                </div>
+            </div>
+
         </div> 
-            <!-- <button class="btn btn-primary" id="submit">Submit</button> -->
         <?php
             echo $this->Form->end('Submit'); 
          ?>
