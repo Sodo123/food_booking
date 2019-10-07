@@ -44,10 +44,14 @@
             <?php unset($food); ?>
         </table>
     </div>
-    <div class=" col-sm-9">
+    <div class="col-sm-9">
         <div>
-            <h3>Orders</h3>
-            <table class="table table-striped table-bordered">
+            <div class="d-flex flex-row bg-secondary mb-3">
+                <h3>Orders</h3>
+                <button class="btn btn-primary" onclick="selectElementContents( document.getElementById('ordersTable') );">Copy</button>
+            </div>
+            
+            <table id="ordersTable" class="table table-striped table-bordered">
                 <tr>
                     <th>Stt</th>
                     <th>User</th>
@@ -165,4 +169,25 @@
         });
 
     });
+
+    function selectElementContents(el) {
+        var body = document.body, range, sel;
+        if (document.createRange && window.getSelection) {
+            range = document.createRange();
+            sel = window.getSelection();
+            sel.removeAllRanges();
+            try {
+                range.selectNodeContents(el);
+                sel.addRange(range);
+            } catch (e) {
+                range.selectNode(el);
+                sel.addRange(range);
+            }
+        } else if (body.createTextRange) {
+            range = body.createTextRange();
+            range.moveToElementText(el);
+            range.select();
+            range.execCommand("Copy");
+        }
+    }
 </script>

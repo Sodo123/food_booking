@@ -30,9 +30,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->meta('icon');
 		//echo $this->Html->css('cake.generic');
 		echo $this->Html->script(array('https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js','global'));
-		echo $this->Html->css('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
+		//echo $this->Html->css('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
 		echo $this->fetch('meta');
-		echo $this->fetch('css');
+		//echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
 </head>
