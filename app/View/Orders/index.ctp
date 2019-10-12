@@ -48,7 +48,10 @@
         <div>
             <div class="d-flex flex-row bg-secondary mb-3">
                 <h3>Orders</h3>
-                <button class="btn btn-primary" onclick="selectElementContents( document.getElementById('ordersTable') );">Copy</button>
+                <div class="" style="" id="totalDesc">
+                    <?php echo $totalDesc ?>
+                </div>
+                <button class="btn btn-primary" onclick="copyToClipBoard();">Copy</button>
             </div>
             
             <table id="ordersTable" class="table table-striped table-bordered">
@@ -170,24 +173,13 @@
 
     });
 
-    function selectElementContents(el) {
-        var body = document.body, range, sel;
-        if (document.createRange && window.getSelection) {
-            range = document.createRange();
-            sel = window.getSelection();
-            sel.removeAllRanges();
-            try {
-                range.selectNodeContents(el);
-                sel.addRange(range);
-            } catch (e) {
-                range.selectNode(el);
-                sel.addRange(range);
-            }
-        } else if (body.createTextRange) {
-            range = body.createTextRange();
-            range.moveToElementText(el);
-            range.select();
-            range.execCommand("Copy");
-        }
+    function copyToClipBoard() {
+        var $temp = $("#totalDesc");
+        var $text = $temp.text();
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($text).select();
+        document.execCommand("copy");
+        $temp.remove();
     }
 </script>

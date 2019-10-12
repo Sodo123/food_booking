@@ -32,20 +32,31 @@ class OrdersController extends AppController {
         $orders = $this->Order->find('all',array('order' => array('Order.created' => 'asc')));
         $new_orders = array();
         $i = 0;
+        $totalDesc = "";
         foreach($orders as $order) {
             $drinksStr = [];
+            $mealsStr = [];
             foreach($order['Food'] as $food)
             {
                 if( $food['category_id'] == 2) {
                     $drinksStr[] = $food['name'] . ' (' . $food['FoodsOrder']['quantity'] . ')';
+                }else {
+                    $mealsStr[] = $food['name'];
                 }
             }
-            $order['Order']['drinks'] = join(", ",$drinksStr);
+            $drinkDesc = join(", ",$drinksStr);
+            $mealDesc = join(", ", $mealsStr);
+            $orderDesc = ($i +1) . "." . $order['Order']['customer_name']  . " - " . $mealDesc . ", " . $drinkDesc;
+            if(!empty($food['note'])) {
+                $orderDesc = $orderDesc . ", " . $food['note'];
+            }
+            $order['Order']['drinks'] =  $drinkDesc;
+            $totalDesc = $totalDesc . $orderDesc . "<br>";
             $new_orders[$i] = $order;
             $i++;
         }
         //pr($new_orders);
-        $this->set(array('meals' => $meals, 'drinks' => $drinks, 'orders' => $new_orders));
+        $this->set(array('meals' => $meals, 'drinks' => $drinks, 'orders' => $new_orders, 'totalDesc' => $totalDesc));
     }
 
     public function add(){
